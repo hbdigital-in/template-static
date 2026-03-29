@@ -1,0 +1,172 @@
+/* ============================================
+   HBDigital — Starter Template CSS
+   Swap CSS variables below for each client's brand.
+   ============================================ */
+
+:root {
+  /* --- Brand Colors: customize per client --- */
+  --color-primary: #1a1a2e;       /* Main brand color (dark navy default) */
+  --color-accent: #c9a84c;        /* Accent / CTA color (gold default) */
+  --color-bg: #ffffff;            /* Page background */
+  --color-bg-alt: #f7f7f5;        /* Alternate section background */
+  --color-text: #2d2d2d;          /* Body text */
+  --color-text-muted: #666666;    /* Secondary text */
+  --color-border: #e5e5e5;
+
+  /* --- Typography --- */
+  --font-main: 'Outfit', system-ui, sans-serif;
+  --font-size-base: 1rem;         /* 16px */
+  --line-height: 1.65;
+
+  /* --- Spacing --- */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+  --spacing-xl: 6rem;
+
+  /* --- Layout --- */
+  --max-width: 1100px;
+  --border-radius: 8px;
+}
+
+/* RESET */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-main); font-size: var(--font-size-base); color: var(--color-text); background: var(--color-bg); line-height: var(--line-height); }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+/* CONTAINER */
+.container { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--spacing-md); }
+
+/* NAVBAR */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--spacing-sm) 0;
+  transition: box-shadow 0.3s;
+}
+.navbar.scrolled { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; }
+.logo { font-weight: 700; font-size: 1.25rem; color: var(--color-primary); }
+.nav-links { display: flex; gap: var(--spacing-md); }
+.nav-links a { font-weight: 500; color: var(--color-text); transition: color 0.2s; }
+.nav-links a:hover { color: var(--color-accent); }
+.nav-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--color-primary); }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  background: var(--color-primary);
+  color: white;
+  padding: var(--spacing-xl) 0;
+  text-align: center;
+}
+.hero-content { max-width: 640px; margin: 0 auto; }
+.hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; line-height: 1.15; margin-bottom: var(--spacing-sm); }
+.hero p { font-size: 1.1rem; opacity: 0.85; margin-bottom: var(--spacing-md); }
+
+/* BUTTONS */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  font-size: 1rem;
+  transition: opacity 0.2s, transform 0.2s;
+  cursor: pointer;
+  border: none;
+}
+.btn:hover { opacity: 0.85; transform: translateY(-1px); }
+.btn-primary { background: var(--color-accent); color: white; }
+
+/* SECTIONS */
+.section { padding: var(--spacing-xl) 0; }
+.section-alt { background: var(--color-bg-alt); }
+.section h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); margin-bottom: var(--spacing-md); color: var(--color-primary); }
+
+/* GRID */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-md); }
+@media (max-width: 768px) { .grid-3 { grid-template-columns: 1fr; } }
+
+/* CARDS */
+.card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+}
+.card h3 { font-size: 1.1rem; margin-bottom: var(--spacing-xs); color: var(--color-primary); }
+.card p { color: var(--color-text-muted); font-size: 0.95rem; }
+
+/* CONTACT */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); align-items: start; }
+@media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
+.contact-info h2 { margin-bottom: var(--spacing-sm); }
+.contact-info p { margin-bottom: var(--spacing-xs); color: var(--color-text-muted); }
+.contact-info a { color: var(--color-accent); }
+
+/* FORM */
+.contact-form { display: flex; flex-direction: column; gap: var(--spacing-sm); }
+.contact-form input,
+.contact-form textarea,
+.contact-form select {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  font-family: var(--font-main);
+  font-size: 1rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  width: 100%;
+}
+.contact-form input:focus,
+.contact-form textarea:focus { outline: 2px solid var(--color-accent); border-color: transparent; }
+.contact-form textarea { resize: vertical; min-height: 120px; }
+.form-note { font-size: 0.85rem; color: var(--color-text-muted); text-align: center; }
+
+/* FOOTER */
+.footer {
+  background: var(--color-primary);
+  color: rgba(255,255,255,0.7);
+  padding: var(--spacing-md) 0;
+  text-align: center;
+  font-size: 0.9rem;
+}
+.footer p + p { margin-top: var(--spacing-xs); }
+.footer a { color: var(--color-accent); }
+
+/* FLOATING WHATSAPP */
+.whatsapp-float {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 200;
+  background: #25D366;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+.whatsapp-float:hover { transform: scale(1.08); }
+
+/* MOBILE NAV */
+@media (max-width: 768px) {
+  .nav-toggle { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--color-bg);
+    flex-direction: column;
+    padding: var(--spacing-md);
+    gap: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .nav-links.open { display: flex; }
+}
