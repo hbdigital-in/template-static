@@ -1,0 +1,233 @@
+<!--
+  COMPONENT: Hero Carousel
+  ========================
+  Full-screen hero with auto-advancing image slideshow, dot navigation, and prev/next arrows.
+
+  SETUP:
+  1. Copy the HTML block into index.html (replace the existing .hero section)
+  2. Copy the CSS block into style.css (append at end)
+  3. Copy the JS block into script.js (replace basic navbar scroll, or append)
+  4. Add images to images/ folder and update the src URLs below
+  5. Replace all [REPLACE: ...] comments
+
+  REQUIRES:
+  - id="navbar" on your <nav> element
+  - id="navToggle" and id="navLinks" on mobile nav elements (from base template)
+  - At least 3 images in images/ (works with 2–10 slides)
+-->
+
+<!-- ═══════════════════════════════════════════════
+     HTML — paste into index.html
+═══════════════════════════════════════════════ -->
+
+<section id="home" class="hero">
+  <div class="hero-slides">
+    <!-- REPLACE: update src for each slide image. Add or remove .hero-slide divs. -->
+    <div class="hero-slide active" style="background-image: url('./images/hero1.jpg')"></div>
+    <div class="hero-slide" style="background-image: url('./images/hero2.jpg')"></div>
+    <div class="hero-slide" style="background-image: url('./images/hero3.jpg')"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <!-- REPLACE: tagline, headline, subheadline, CTA links -->
+    <p class="hero-tagline">[Tagline — e.g. Est. 1990 &mdash; Mumbai]</p>
+    <h1>[Your Main Headline<br><em>Goes Here</em>]</h1>
+    <p class="hero-sub">[Supporting sentence — what you do and for whom]</p>
+    <div class="hero-actions">
+      <a href="#services" class="btn btn-primary">[Primary CTA]</a>
+      <!-- REPLACE: WhatsApp link — update phone number and message text -->
+      <a href="https://wa.me/91XXXXXXXXXX?text=Hi!%20I%27d%20like%20to%20enquire." class="btn btn-outline" target="_blank" rel="noopener">WhatsApp Us</a>
+    </div>
+  </div>
+  <div class="hero-nav">
+    <button class="hero-btn hero-prev" id="heroPrev" aria-label="Previous slide">&#8592;</button>
+    <div class="hero-dots" id="heroDots"></div>
+    <button class="hero-btn hero-next" id="heroNext" aria-label="Next slide">&#8594;</button>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     CSS — append to style.css
+═══════════════════════════════════════════════ -->
+<style>
+/* Hero Carousel */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  color: white;
+}
+
+.hero-slides {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.hero-slide.active { opacity: 1; }
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+  padding: 0 var(--spacing-md);
+}
+
+.hero-tagline {
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin-bottom: var(--spacing-sm);
+}
+
+.hero-content h1 {
+  font-size: clamp(2.2rem, 5.5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: var(--spacing-sm);
+}
+
+.hero-content h1 em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.hero-sub {
+  font-size: 1.05rem;
+  opacity: 0.85;
+  margin-bottom: var(--spacing-md);
+  line-height: 1.6;
+}
+
+.hero-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid rgba(255,255,255,0.7);
+  color: white;
+}
+.btn-outline:hover { background: rgba(255,255,255,0.15); }
+
+/* Nav controls */
+.hero-nav {
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.hero-dots { display: flex; gap: 0.5rem; }
+
+.hero-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.3s, transform 0.3s;
+}
+.hero-dot.active {
+  background: var(--color-accent);
+  transform: scale(1.3);
+}
+
+.hero-btn {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.hero-btn:hover { background: rgba(255,255,255,0.3); }
+</style>
+
+
+<!-- ═══════════════════════════════════════════════
+     JS — append to script.js (or replace the
+     basic navbar section with this full version)
+═══════════════════════════════════════════════ -->
+<script>
+// Navbar scroll
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// Mobile nav
+const navToggle = document.getElementById('navToggle');
+const navLinksEl = document.getElementById('navLinks');
+navToggle.addEventListener('click', () => {
+  navLinksEl.classList.toggle('open');
+});
+navLinksEl.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => navLinksEl.classList.remove('open'));
+});
+
+// Hero Carousel
+const slides = document.querySelectorAll('.hero-slide');
+const dotsContainer = document.getElementById('heroDots');
+let currentSlide = 0;
+let slideInterval;
+
+slides.forEach((_, i) => {
+  const dot = document.createElement('button');
+  dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
+  dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+  dot.addEventListener('click', () => { goToSlide(i); restartInterval(); });
+  dotsContainer.appendChild(dot);
+});
+
+function goToSlide(index) {
+  slides[currentSlide].classList.remove('active');
+  dotsContainer.children[currentSlide].classList.remove('active');
+  currentSlide = (index + slides.length) % slides.length;
+  slides[currentSlide].classList.add('active');
+  dotsContainer.children[currentSlide].classList.add('active');
+}
+
+function restartInterval() {
+  clearInterval(slideInterval);
+  slideInterval = setInterval(() => goToSlide(currentSlide + 1), 4500);
+}
+
+document.getElementById('heroNext').addEventListener('click', () => { goToSlide(currentSlide + 1); restartInterval(); });
+document.getElementById('heroPrev').addEventListener('click', () => { goToSlide(currentSlide - 1); restartInterval(); });
+
+slideInterval = setInterval(() => goToSlide(currentSlide + 1), 4500);
+</script>

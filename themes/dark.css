@@ -1,0 +1,120 @@
+/* ============================================================
+   HBDigital — Dark Elegant Theme
+   ============================================================
+   Drop-in replacement for the :root variables in style.css.
+   Ported from Raaj Studio's production design.
+
+   USAGE:
+   1. In index.html, add this after style.css:
+      <link rel="stylesheet" href="../themes/dark.css">
+      — OR —
+      Copy the :root block below into style.css, replacing the existing one.
+
+   2. Update Google Fonts import for the serif + sans pairing:
+      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+   3. Change --font-main references in body/headings:
+      body font-family: 'Inter', system-ui, sans-serif
+      h1, h2, h3: 'Playfair Display', Georgia, serif
+      (Add these rules after this file is linked)
+   ============================================================ */
+
+:root {
+  /* --- Dark Background Scale --- */
+  --color-bg:       #0d0d0d;    /* Page background (near-black) */
+  --color-bg-alt:   #141414;    /* Alternate section background (slightly lighter) */
+  --color-bg-card:  #1c1c1c;    /* Card / elevated surface */
+
+  /* --- Brand Colors --- */
+  --color-primary:  #f0ede8;    /* Main text on dark bg (warm cream white) */
+  --color-accent:   #c9a96e;    /* Gold accent — CTAs, highlights, links */
+  --color-accent-lt:#e0c48a;    /* Lighter gold for hover states */
+
+  /* --- Text --- */
+  --color-text:       #f0ede8;  /* Body text */
+  --color-text-muted: #888880;  /* Secondary / muted text */
+
+  /* --- Borders --- */
+  --color-border:   rgba(255, 255, 255, 0.08);
+
+  /* --- Typography --- */
+  --font-main:      'Inter', system-ui, sans-serif;
+  --font-serif:     'Playfair Display', Georgia, serif;
+  --font-size-base: 1rem;
+  --line-height:    1.7;
+
+  /* --- Spacing (unchanged from light theme) --- */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+  --spacing-xl: 6rem;
+
+  /* --- Layout (unchanged) --- */
+  --max-width:     1200px;
+  --border-radius: 4px;       /* Tighter radius for an elegant feel */
+}
+
+/* Apply dark background globally */
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-weight: 300;
+}
+
+/* Serif headings for dark/elegant theme */
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* Links */
+a { color: var(--color-accent); }
+a:hover { color: var(--color-accent-lt); }
+
+/* Navbar override for dark theme */
+.navbar {
+  background: rgba(13, 13, 13, 0.95);
+  backdrop-filter: blur(8px);
+  border-bottom-color: var(--color-border);
+}
+
+/* Section alt override */
+.section-alt {
+  background: var(--color-bg-alt);
+}
+
+/* Card override */
+.card {
+  background: var(--color-bg-card);
+  border-color: var(--color-border);
+}
+.card h3 { color: var(--color-accent); }
+
+/* Form inputs override */
+.contact-form input,
+.contact-form textarea,
+.contact-form select {
+  background: var(--color-bg-card);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* Footer override */
+.footer {
+  background: #000;
+  border-top: 1px solid var(--color-border);
+}
+
+/* Accent button on dark bg */
+.btn-primary {
+  background: var(--color-accent);
+  color: #0d0d0d;
+  font-weight: 600;
+}
+.btn-primary:hover { background: var(--color-accent-lt); }

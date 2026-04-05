@@ -155,6 +155,13 @@ ul { list-style: none; }
 }
 .whatsapp-float:hover { transform: scale(1.08); }
 
+/* SCROLL REVEAL */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* GALLERY HIDDEN (filter) */
+.gallery-item.hidden { display: none; }
+
 /* MOBILE NAV */
 @media (max-width: 768px) {
   .nav-toggle { display: block; }

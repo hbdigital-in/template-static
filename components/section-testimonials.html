@@ -1,0 +1,144 @@
+<!--
+  COMPONENT: Testimonials
+  ========================
+  3-card testimonial block with star rating, quote, and client attribution.
+
+  SETUP:
+  1. Copy the HTML block into index.html (works well after services, before contact)
+  2. Copy the CSS block into style.css (append at end)
+  3. No JS required
+  4. Replace all [REPLACE: ...] values with real client testimonials
+  5. Collect real reviews from Google Business, WhatsApp, or direct client feedback
+-->
+
+<!-- ═══════════════════════════════════════════════
+     HTML — paste into index.html
+═══════════════════════════════════════════════ -->
+
+<section class="section testimonials-section">
+  <div class="container">
+    <div class="section-header-center">
+      <!-- REPLACE: customise eyebrow and heading -->
+      <p class="eyebrow">What Clients Say</p>
+      <h2>Testimonials</h2>
+    </div>
+    <div class="testimonials-grid">
+
+      <!-- REPLACE: one .testimonial-card per real client review -->
+      <div class="testimonial-card">
+        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote class="testimonial-quote">
+          "[Paste actual client quote here. Keep it genuine — 2–4 sentences is ideal. Avoid generic phrases.]"
+        </blockquote>
+        <div class="testimonial-author">
+          <!-- REPLACE: client name, description -->
+          <div class="author-avatar">[Initials]</div>
+          <div>
+            <strong>[Client Name]</strong>
+            <span>[Business / Location — e.g. Priya, Mulund]</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote class="testimonial-quote">
+          "[Second client quote here.]"
+        </blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">[Initials]</div>
+          <div>
+            <strong>[Client Name]</strong>
+            <span>[Business / Location]</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote class="testimonial-quote">
+          "[Third client quote here.]"
+        </blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">[Initials]</div>
+          <div>
+            <strong>[Client Name]</strong>
+            <span>[Business / Location]</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     CSS — append to style.css
+═══════════════════════════════════════════════ -->
+<style>
+/* Testimonials */
+.testimonials-section { background: var(--color-bg-alt); }
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+@media (max-width: 900px) { .testimonials-grid { grid-template-columns: 1fr; } }
+@media (min-width: 600px) and (max-width: 900px) { .testimonials-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.testimonial-card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.testimonial-stars {
+  color: var(--color-accent);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+}
+
+.testimonial-quote {
+  font-size: 0.97rem;
+  line-height: 1.7;
+  color: var(--color-text);
+  flex: 1;
+  font-style: italic;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+.author-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.testimonial-author strong {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--color-primary);
+}
+
+.testimonial-author span {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+</style>

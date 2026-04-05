@@ -23,32 +23,65 @@ navLinks.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => navLinks.classList.remove('open'));
 });
 
-// --- Contact form: success message (optional enhancement) ---
-// Formspree handles the submission. Uncomment below to show a thank-you
-// message instead of redirecting to Formspree's default page.
-//
-// const form = document.querySelector('.contact-form');
-// if (form) {
-//   form.addEventListener('submit', async (e) => {
-//     e.preventDefault();
-//     const data = new FormData(form);
-//     const res = await fetch(form.action, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
-//     if (res.ok) {
-//       form.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--color-accent);font-weight:600;">Thank you! We\'ll be in touch shortly.</p>';
-//     }
-//   });
-// }
+// --- Contact form: async submit with loading state ---
+// Shows "Sending..." while submitting and "Message Sent!" on success.
+// Falls back gracefully if form is not present on the page.
+const form = document.querySelector('.contact-form');
+if (form) {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]');
+    const originalText = btn.textContent;
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' }
+      });
+      if (res.ok) {
+        btn.textContent = 'Message Sent!';
+        form.reset();
+        setTimeout(() => { btn.textContent = originalText; btn.disabled = false; }, 3000);
+      } else {
+        btn.textContent = 'Try Again';
+        btn.disabled = false;
+      }
+    } catch {
+      btn.textContent = 'Try Again';
+      btn.disabled = false;
+    }
+  });
+}
 
-// --- Gallery filter (uncomment if adding a gallery section) ---
-// const filterBtns = document.querySelectorAll('.filter-btn');
-// const galleryItems = document.querySelectorAll('.gallery-item');
-// filterBtns.forEach(btn => {
-//   btn.addEventListener('click', () => {
-//     filterBtns.forEach(b => b.classList.remove('active'));
-//     btn.classList.add('active');
-//     const filter = btn.dataset.filter;
-//     galleryItems.forEach(item => {
-//       item.classList.toggle('hidden', filter !== 'all' && item.dataset.category !== filter);
-//     });
-//   });
-// });
+// --- Gallery filter (active when .filter-btn and .gallery-item elements exist) ---
+const filterBtns = document.querySelectorAll('.filter-btn');
+const galleryItems = document.querySelectorAll('.gallery-item');
+if (filterBtns.length && galleryItems.length) {
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      galleryItems.forEach(item => {
+        item.classList.toggle('hidden', filter !== 'all' && item.dataset.category !== filter);
+      });
+    });
+  });
+}
+
+// --- Scroll reveal (elements with class .reveal animate in on scroll) ---
+// Add class="reveal" to any element you want to fade/slide in.
+const revealEls = document.querySelectorAll('.reveal');
+if (revealEls.length) {
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => revealObserver.observe(el));
+}

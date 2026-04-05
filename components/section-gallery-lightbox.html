@@ -1,0 +1,298 @@
+<!--
+  COMPONENT: Filterable Gallery with Lightbox
+  ============================================
+  Image grid with category filter buttons and a full-screen lightbox viewer.
+  Keyboard navigable (arrow keys, Escape).
+
+  SETUP:
+  1. Copy the HTML block into index.html (place after services section)
+  2. Copy the CSS block into style.css (append at end)
+  3. Copy the JS block into script.js (append at end)
+  4. Add images to images/ folder and update src/alt/data-category attributes
+  5. Update filter button labels and data-filter values to match your categories
+  6. Replace all [REPLACE: ...] comments
+
+  CATEGORIES: Update data-filter on buttons and data-category on items to match.
+  Use lowercase, no spaces (e.g. "weddings", "portraits", "commercial").
+  The "all" filter always shows everything — keep that button.
+-->
+
+<!-- ═══════════════════════════════════════════════
+     HTML — paste into index.html
+═══════════════════════════════════════════════ -->
+
+<section id="gallery" class="section section-alt gallery-section">
+  <div class="container">
+    <div class="section-header-center">
+      <!-- REPLACE: eyebrow, title, subtitle -->
+      <p class="eyebrow">[Our Work]</p>
+      <h2>Gallery</h2>
+      <p class="section-sub">[A glimpse into what we do — and how we do it.]</p>
+    </div>
+
+    <!-- REPLACE: update data-filter values and button labels to match your categories -->
+    <div class="gallery-filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="category1">[Category 1]</button>
+      <button class="filter-btn" data-filter="category2">[Category 2]</button>
+      <button class="filter-btn" data-filter="category3">[Category 3]</button>
+    </div>
+
+    <div class="gallery-grid">
+      <!-- REPLACE: update src, alt, data-category, and overlay caption for each item -->
+      <!-- Copy and paste .gallery-item blocks to add more images -->
+      <div class="gallery-item" data-category="category1">
+        <img src="./images/gallery1.jpg" alt="[Image description]" loading="lazy">
+        <div class="gallery-overlay"><span>[Caption text]</span></div>
+      </div>
+      <div class="gallery-item" data-category="category1">
+        <img src="./images/gallery2.jpg" alt="[Image description]" loading="lazy">
+        <div class="gallery-overlay"><span>[Caption text]</span></div>
+      </div>
+      <div class="gallery-item" data-category="category2">
+        <img src="./images/gallery3.jpg" alt="[Image description]" loading="lazy">
+        <div class="gallery-overlay"><span>[Caption text]</span></div>
+      </div>
+      <div class="gallery-item" data-category="category2">
+        <img src="./images/gallery4.jpg" alt="[Image description]" loading="lazy">
+        <div class="gallery-overlay"><span>[Caption text]</span></div>
+      </div>
+      <div class="gallery-item" data-category="category3">
+        <img src="./images/gallery5.jpg" alt="[Image description]" loading="lazy">
+        <div class="gallery-overlay"><span>[Caption text]</span></div>
+      </div>
+      <div class="gallery-item" data-category="category1">
+        <img src="./images/gallery6.jpg" alt="[Image description]" loading="lazy">
+        <div class="gallery-overlay"><span>[Caption text]</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox — place just before </body> -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+  <button class="lightbox-prev" id="lightboxPrev" aria-label="Previous image">&#8592;</button>
+  <button class="lightbox-next" id="lightboxNext" aria-label="Next image">&#8594;</button>
+  <div class="lightbox-content">
+    <img src="" alt="" id="lightboxImg">
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     CSS — append to style.css
+═══════════════════════════════════════════════ -->
+<style>
+/* Section header centred variant */
+.section-header-center { text-align: center; margin-bottom: var(--spacing-md); }
+.section-header-center h2 { margin-bottom: var(--spacing-xs); }
+.eyebrow {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 0.5rem;
+}
+.section-sub { color: var(--color-text-muted); max-width: 560px; margin: 0 auto; }
+
+/* Filter buttons */
+.gallery-filters {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-md);
+}
+
+.filter-btn {
+  padding: 0.45rem 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-btn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+.filter-btn.active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: white;
+}
+
+/* Gallery grid */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+@media (max-width: 768px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .gallery-grid { grid-template-columns: 1fr; }
+}
+
+.gallery-item {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+.gallery-item.hidden { display: none; }
+
+.gallery-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.gallery-item:hover img { transform: scale(1.05); }
+
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex; align-items: flex-end;
+  padding: 0.75rem 1rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.gallery-item:hover .gallery-overlay { opacity: 1; }
+.gallery-overlay span {
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.lightbox.open { opacity: 1; pointer-events: all; }
+
+.lightbox-content { position: relative; max-width: 90vw; max-height: 85vh; text-align: center; }
+.lightbox-content img {
+  max-width: 100%; max-height: 80vh;
+  object-fit: contain;
+  border-radius: 4px;
+  display: block;
+}
+.lightbox-caption { color: rgba(255,255,255,0.7); margin-top: 0.75rem; font-size: 0.9rem; }
+
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: white;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 44px; height: 44px;
+  font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+  z-index: 1001;
+}
+.lightbox-close:hover,
+.lightbox-prev:hover,
+.lightbox-next:hover { background: rgba(255,255,255,0.3); }
+
+.lightbox-close { top: 1rem; right: 1rem; font-size: 1.4rem; }
+.lightbox-prev { left: 1rem; top: 50%; transform: translateY(-50%); }
+.lightbox-next { right: 1rem; top: 50%; transform: translateY(-50%); }
+</style>
+
+
+<!-- ═══════════════════════════════════════════════
+     JS — append to script.js
+═══════════════════════════════════════════════ -->
+<script>
+// Gallery Filter
+const filterBtns = document.querySelectorAll('.filter-btn');
+const galleryItems = document.querySelectorAll('.gallery-item');
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    galleryItems.forEach(item => {
+      item.classList.toggle('hidden', filter !== 'all' && item.dataset.category !== filter);
+    });
+  });
+});
+
+// Lightbox
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxCaption = document.getElementById('lightboxCaption');
+let lightboxIndex = 0;
+let visibleItems = [];
+
+function getVisible() {
+  return Array.from(galleryItems).filter(i => !i.classList.contains('hidden'));
+}
+
+function openLightbox(index) {
+  visibleItems = getVisible();
+  lightboxIndex = index;
+  updateLightbox();
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function updateLightbox() {
+  const item = visibleItems[lightboxIndex];
+  const img = item.querySelector('img');
+  lightboxImg.src = img.src;
+  lightboxImg.alt = img.alt;
+  lightboxCaption.textContent = item.querySelector('.gallery-overlay span').textContent;
+}
+
+galleryItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const visible = getVisible();
+    openLightbox(visible.indexOf(item));
+  });
+});
+
+document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
+document.getElementById('lightboxPrev').addEventListener('click', () => {
+  lightboxIndex = (lightboxIndex - 1 + visibleItems.length) % visibleItems.length;
+  updateLightbox();
+});
+document.getElementById('lightboxNext').addEventListener('click', () => {
+  lightboxIndex = (lightboxIndex + 1) % visibleItems.length;
+  updateLightbox();
+});
+
+document.addEventListener('keydown', e => {
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') { lightboxIndex = (lightboxIndex - 1 + visibleItems.length) % visibleItems.length; updateLightbox(); }
+  if (e.key === 'ArrowRight') { lightboxIndex = (lightboxIndex + 1) % visibleItems.length; updateLightbox(); }
+});
+</script>

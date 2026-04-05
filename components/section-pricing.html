@@ -1,0 +1,249 @@
+<!--
+  COMPONENT: Pricing Table
+  =========================
+  3-tier pricing cards matching HBDigital's Starter / Growth / Premium package structure.
+  Middle card has "Popular" badge and highlight styling.
+
+  SETUP:
+  1. Copy the HTML block into index.html (works well near the bottom, before contact)
+  2. Copy the CSS block into style.css (append at end)
+  3. No JS required
+  4. Replace all [REPLACE: ...] values with real pricing and feature lists
+  5. Update the WhatsApp link with correct phone number and pre-filled message
+
+  NOTE: This is the pricing table for the HBDigital agency site itself,
+  or can be adapted for any client with service packages.
+-->
+
+<!-- ═══════════════════════════════════════════════
+     HTML — paste into index.html
+═══════════════════════════════════════════════ -->
+
+<section id="pricing" class="section pricing-section">
+  <div class="container">
+    <div class="section-header-center">
+      <!-- REPLACE: customise heading and subtitle -->
+      <p class="eyebrow">Simple Pricing</p>
+      <h2>Packages</h2>
+      <p class="section-sub">One-time setup. No hidden fees. Cancel any time.</p>
+    </div>
+    <div class="pricing-grid">
+
+      <!-- TIER 1: Starter -->
+      <div class="pricing-card">
+        <div class="pricing-header">
+          <h3 class="tier-name">Starter</h3>
+          <div class="tier-price">
+            <span class="price-currency">₹</span>
+            <span class="price-amount">5,999</span>
+          </div>
+          <p class="price-note">one-time setup</p>
+          <p class="price-retainer">+ ₹599/month retainer</p>
+        </div>
+        <ul class="pricing-features">
+          <!-- REPLACE: update features for your Starter package -->
+          <li>1-page professional website</li>
+          <li>Custom email (name@yourdomain)</li>
+          <li>Google Business profile setup</li>
+          <li>WhatsApp button on site</li>
+          <li>Contact form</li>
+          <li>Mobile responsive</li>
+          <li>Ready in 5–7 days</li>
+        </ul>
+        <!-- REPLACE: WhatsApp number and message -->
+        <a href="https://wa.me/918850281560?text=Hi!%20I%27m%20interested%20in%20the%20Starter%20package." class="btn btn-outline-dark" target="_blank" rel="noopener">Get Started</a>
+      </div>
+
+      <!-- TIER 2: Growth (Popular) -->
+      <div class="pricing-card pricing-popular">
+        <div class="popular-badge">Most Popular</div>
+        <div class="pricing-header">
+          <h3 class="tier-name">Growth</h3>
+          <div class="tier-price">
+            <span class="price-currency">₹</span>
+            <span class="price-amount">12,999</span>
+          </div>
+          <p class="price-note">one-time setup</p>
+          <p class="price-retainer">+ ₹999/month retainer</p>
+        </div>
+        <ul class="pricing-features">
+          <!-- REPLACE: update features for your Growth package -->
+          <li>Multi-page website</li>
+          <li>Photo gallery with filter</li>
+          <li>Contact form with service selector</li>
+          <li>5 business email accounts</li>
+          <li>Google Business setup</li>
+          <li>WhatsApp button + float</li>
+          <li>Mobile responsive</li>
+          <li>Ready in 7–10 days</li>
+        </ul>
+        <a href="https://wa.me/918850281560?text=Hi!%20I%27m%20interested%20in%20the%20Growth%20package." class="btn btn-primary" target="_blank" rel="noopener">Get Started</a>
+      </div>
+
+      <!-- TIER 3: Premium -->
+      <div class="pricing-card">
+        <div class="pricing-header">
+          <h3 class="tier-name">Premium</h3>
+          <div class="tier-price">
+            <span class="price-currency">₹</span>
+            <span class="price-amount">24,999</span>
+          </div>
+          <p class="price-note">one-time setup</p>
+          <p class="price-retainer">+ ₹1,999/month retainer</p>
+        </div>
+        <ul class="pricing-features">
+          <!-- REPLACE: update features for your Premium package -->
+          <li>Full custom website</li>
+          <li>Online catalogue / product listing</li>
+          <li>WhatsApp ordering integration</li>
+          <li>Unlimited email accounts</li>
+          <li>Google Workspace</li>
+          <li>Priority support</li>
+          <li>Analytics dashboard</li>
+          <li>Ready in 14–21 days</li>
+        </ul>
+        <a href="https://wa.me/918850281560?text=Hi!%20I%27m%20interested%20in%20the%20Premium%20package." class="btn btn-outline-dark" target="_blank" rel="noopener">Get Started</a>
+      </div>
+
+    </div>
+
+    <!-- Optional: custom quote CTA -->
+    <p class="pricing-custom">Need something specific? <a href="https://wa.me/918850281560?text=Hi!%20I%20need%20a%20custom%20quote." target="_blank" rel="noopener">WhatsApp me for a custom quote →</a></p>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     CSS — append to style.css
+═══════════════════════════════════════════════ -->
+<style>
+/* Pricing */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+  align-items: start;
+}
+@media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; } }
+
+.pricing-card {
+  position: relative;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.pricing-popular {
+  border-color: var(--color-accent);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+  transform: translateY(-6px);
+}
+@media (max-width: 900px) { .pricing-popular { transform: none; } }
+
+.popular-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-accent);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.9rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.tier-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.25rem;
+}
+
+.tier-price {
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+  line-height: 1;
+}
+
+.price-currency {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-top: 4px;
+}
+
+.price-amount {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.price-note {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-top: -4px;
+}
+
+.price-retainer {
+  font-size: 0.85rem;
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+.pricing-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  margin: 0.5rem 0;
+}
+
+.pricing-features li {
+  font-size: 0.9rem;
+  color: var(--color-text);
+  padding-left: 1.4rem;
+  position: relative;
+}
+
+.pricing-features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.btn-outline-dark {
+  background: transparent;
+  border: 2px solid var(--color-border);
+  color: var(--color-primary);
+  text-align: center;
+}
+.btn-outline-dark:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.pricing-custom {
+  text-align: center;
+  margin-top: var(--spacing-md);
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+}
+
+.pricing-custom a {
+  color: var(--color-accent);
+  font-weight: 500;
+}
+</style>
